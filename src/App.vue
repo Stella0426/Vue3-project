@@ -38,7 +38,18 @@
       class="card mt-2"
     >
       <div class="card-body p-2">
-        {{todo.subject}}
+        <div class="form-check">
+          <input 
+            class="form-check-input" 
+            type="checkbox"
+            v-model="todo.completed"
+          >
+          <label
+            class="form-check-label"
+          >
+            {{ todo.subject }}
+          </label>
+        </div>
       </div>
     </div>
   </div>
@@ -50,13 +61,8 @@
 
   export default {
     setup() {
-      const toggle =ref(false)
       const todo = ref('');
-      const todos = ref([
-        {id:1, subject:'흠이 생일선물 사기'},
-        {id:2, subject:'흠이 빼빼로 만들어주기'}
-      ]);
-
+      const todos = ref([]);
       const hasError = ref(false);
 
       const onSubmit = () => {
@@ -67,9 +73,11 @@
         } else {
           todos.value.push({
           id: Date.now(),
-          subject: todo.value
+          subject: todo.value,
+          completed: false,
           });
           hasError.value = false;
+          todo.value='';
         }
       }
 
@@ -78,16 +86,11 @@
       //   name.value = e.target.value;
       // }
 
-      const onToggle = () => {
-        toggle.value = !toggle.value;
-      }
 
       return{
         todo,
         onSubmit,
         todos,
-        toggle,
-        onToggle,
         hasError
         // updateName
       };
