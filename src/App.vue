@@ -1,7 +1,4 @@
 <template> 
-  <div v-if="toggle">true</div>
-  <div v-else>false</div>
-  <button @click="onToggle">Toggle</button>
   <div class="container">
     <h2>To-Do List</h2>
     <form @submit.prevent="onSubmit">
@@ -31,7 +28,6 @@
         This field cannot be empty
       </div>
     </form>
-    {{todos}}
     <div 
       v-for="todo in todos" 
       :key="todo.id"
@@ -46,7 +42,9 @@
           >
           <label
             class="form-check-label"
+            :class="{ todo: todo.completed }"
           >
+          <!-- :style="todo.completed ? todoStyle : {}" style바인딩 (label안에 적어주기)-->
             {{ todo.subject }}
           </label>
         </div>
@@ -64,13 +62,18 @@
       const todo = ref('');
       const todos = ref([]);
       const hasError = ref(false);
+      const todoStyle = {
+        textDecoration: 'line-through',
+        color: 'gray'
+      }
 
       const onSubmit = () => {
         // e.preventDefault();
         // console.log(todo.value)
-        if (todo.value === ''){
+        if (todo.value === '') {
           hasError.value = true
-        } else {
+        } 
+        else {
           todos.value.push({
           id: Date.now(),
           subject: todo.value,
@@ -91,7 +94,8 @@
         todo,
         onSubmit,
         todos,
-        hasError
+        hasError,
+        todoStyle
         // updateName
       };
     }
@@ -99,4 +103,8 @@
 </script>
 
 <style>
+  .todo {
+    color: gray;
+    text-decoration: line-through;
+  }
 </style>
