@@ -7,10 +7,10 @@
     >
       <div class="flex-grow-1 mr-2">
         <input 
-        class="form-control"
-        type="text" 
-        v-model="todo"
-        placeholder="Type new to-do"
+          class="form-control"
+          type="text" 
+          v-model="todo"
+          placeholder="Type new to-do"
         >
       <!-- @input="updateName" -->
       <!-- :value="name" -->
@@ -19,14 +19,18 @@
       </div>
       <div class="">
         <button 
-        class="btn btn-primary"
-        @click="onSubmit"
+          class="btn btn-primary"
+          @click="onSubmit"
         >
         Add
         </button>
       </div>
     </form>
-    {{ todos }}
+    <div class="card mt-2">
+      <div class="card-body p-2">
+        {{todos[0].subject}}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -37,11 +41,14 @@
   export default {
     setup() {
       const todo = ref('');
-      const todos = ref([]);
+      const todos = ref([
+        {id:1, subject:'흠이 생일선물 사기'},
+        {id:2, subject:'흠이 빼빼로 만들어주기'}
+      ]);
 
       const onSubmit = () => {
         // e.preventDefault();
-        console.log(todo.value)
+        // console.log(todo.value)
         todos.value.push({
           id: Date.now(),
           subject: todo.value
