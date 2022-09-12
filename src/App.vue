@@ -7,23 +7,31 @@
 <template>
   <div class="name">{{ name }}</div>
   <div>Hi</div>
-  <!-- vue.js 2 : 하나의 큰 div로 묶어줘야했었다.(아래 예시 참고)
+  <div>{{ greeting(name) }}</div>
+  <!-- 
+    vue.js 2 : 하나의 큰 div로 묶어줘야했었다.(아래 예시 참고)
     <div>
       <div class="name">{{ name }}</div>
       <div>Hi</div>
     </div> 
-  하지만 ver.3부턴 안그래도 됨 -->
+  하지만 ver.3부턴 안그래도 됨 
+  -->
 </template>
 
 <script>
   export default {
     setup() {
-      const name = 'Kossie Coder1';
+      const name = 'Heum';
+
+      const greeting = (name) => {
+        return 'Hello, ' + name;
+      }
 
       return{
-        name
+        name,
         // 변수를 리턴해주면 이 안의 변수들은 template안에서 접근이 가능해짐
         // template 안에서 접근해주려면 {{데이터의 변수}} 콧수염문법 써주기
+        greeting,
       };
     }
   }
