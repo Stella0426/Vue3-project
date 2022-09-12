@@ -7,7 +7,11 @@
 <template>
   <div class="name">{{ name }}</div>
   <div>Hi</div>
-  <div>{{ greeting(name) }}</div>
+  <button 
+    class="btn btn-primary"
+    v-on:click="updateName"
+  >Click</button>
+  <!-- <div>{{ greeting(name) }}</div> -->
   <!-- 
     vue.js 2 : 하나의 큰 div로 묶어줘야했었다.(아래 예시 참고)
     <div>
@@ -21,17 +25,23 @@
 <script>
   export default {
     setup() {
-      const name = 'Heum';
+      let name = 'Heum';
 
-      const greeting = (name) => {
-        return 'Hello, ' + name;
+      // const greeting = (name) => {
+      //   return 'Hello, ' + name;
+      // }
+
+      const updateName = () => {
+        name = 'Byul';
+        console.log(name)
       }
 
       return{
         name,
+        updateName
+        // greeting,
         // 변수를 리턴해주면 이 안의 변수들은 template안에서 접근이 가능해짐
         // template 안에서 접근해주려면 {{데이터의 변수}} 콧수염문법 써주기
-        greeting,
       };
     }
   }
