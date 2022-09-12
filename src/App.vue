@@ -6,6 +6,13 @@
 -->
 <template>
   <div class="name">{{ name }}</div>
+  <div>Hi</div>
+  <!-- vue.js 2 : 하나의 큰 div로 묶어줘야했었다.(아래 예시 참고)
+    <div>
+      <div class="name">{{ name }}</div>
+      <div>Hi</div>
+    </div> 
+  하지만 ver.3부턴 안그래도 됨 -->
 </template>
 
 <script>
