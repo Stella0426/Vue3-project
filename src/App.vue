@@ -1,29 +1,34 @@
 <template> 
+  <div v-if="toggle">true</div>
+  <div v-else>false</div>
+  <button @click="onToggle">Toggle</button>
   <div class="container">
     <h2>To-Do List</h2>
-    <form
-      @submit.prevent="onSubmit" 
-      class="d-flex"
-    >
-      <div class="flex-grow-1 mr-2">
-        <input 
-          class="form-control"
-          type="text" 
-          v-model="todo"
-          placeholder="Type new to-do"
-        >
-      <!-- @input="updateName" -->
-      <!-- :value="name" -->
-      <!-- 위 두개를 input안에 써주지않고 v-model(value 바인딩도 해주고,name값이 변경되었을때 값도 알아서 업뎃해주는게 한방에 가능) 
-        한번만 적어주면 끝!-->
+    <form @submit.prevent="onSubmit">
+      <div class="d-flex">
+        <div class="flex-grow-1 mr-2">
+          <input 
+            class="form-control"
+            type="text" 
+            v-model="todo"
+            placeholder="Type new to-do"
+          >
+          <!-- @input="updateName" -->
+          <!-- :value="name" -->
+          <!-- 위 두개를 input안에 써주지않고 v-model(value 바인딩도 해주고,name값이 변경되었을때 값도 알아서 업뎃해주는게 한방에 가능) 
+            한번만 적어주면 끝!-->
+        </div>
+        <div>
+          <button 
+            class="btn btn-primary"
+            @click="onSubmit"
+          >
+          Add
+          </button>
+        </div>
       </div>
-      <div class="">
-        <button 
-          class="btn btn-primary"
-          @click="onSubmit"
-        >
-        Add
-        </button>
+      <div v-show="hasError" style="color:red">
+        This field cannot be empty
       </div>
     </form>
     {{todos}}
@@ -38,26 +43,34 @@
     </div>
   </div>
 </template>
-
+<!-- v-show : 초기렌더링비용이많이듦(토글자주할때사용) // v-if : 토글비용많이듦(조건이runtime동안바뀌지않을때) -->
 <script>
   import { ref } from 'vue';
   // import { reactive } from 'vue';
 
   export default {
     setup() {
+      const toggle =ref(false)
       const todo = ref('');
       const todos = ref([
         {id:1, subject:'흠이 생일선물 사기'},
         {id:2, subject:'흠이 빼빼로 만들어주기'}
       ]);
 
+      const hasError = ref(false);
+
       const onSubmit = () => {
         // e.preventDefault();
         // console.log(todo.value)
-        todos.value.push({
+        if (todo.value === ''){
+          hasError.value = true
+        } else {
+          todos.value.push({
           id: Date.now(),
           subject: todo.value
-        });
+          });
+          hasError.value = false;
+        }
       }
 
       // const updateName = (e) => {
@@ -65,10 +78,17 @@
       //   name.value = e.target.value;
       // }
 
+      const onToggle = () => {
+        toggle.value = !toggle.value;
+      }
+
       return{
         todo,
         onSubmit,
-        todos
+        todos,
+        toggle,
+        onToggle,
+        hasError
         // updateName
       };
     }
